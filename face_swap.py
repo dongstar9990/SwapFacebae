@@ -18,6 +18,8 @@ def bilinear_interpolate(img, coords):
     dx, dy = coords - int_coords
 
     # 4 Neighour pixels
+    # print('x0',x0)
+    # print('y0',y0)
     q11 = img[y0, x0]
     q21 = img[y0, x0 + 1]
     q12 = img[y0 + 1, x0]
@@ -118,7 +120,7 @@ def transformation_from_points(points1, points2):
 
 def warp_image_2d(im, M, dshape):
     output_im = np.zeros(dshape, dtype=im.dtype)
-    print("output_im" , output_im)
+    # print("output_im" , output_im)
     cv2.warpAffine(im,
                    M[:2],
                    (dshape[1], dshape[0]),
@@ -203,7 +205,6 @@ def check_points(img,points):
 def face_swap(src_face, dst_face, src_points, dst_points, dst_shape, dst_img, args, end=48):
     # dst_face.shape[:2]
     h, w = dst_face.shape[:2]
-
     print(h , w)
     ## 3d warp
     warped_src_face = warp_image_3d(src_face, src_points[:end], dst_points[:end], (h, w))
@@ -235,7 +236,7 @@ def face_swap(src_face, dst_face, src_points, dst_points, dst_shape, dst_img, ar
     output = cv2.seamlessClone(warped_src_face, dst_face, mask, center, cv2.NORMAL_CLONE)
 
     x, y, w, h = dst_shape
-    print("x, y, w, h" , x, y, w, h)
+    # print("x, y, w, h" , x, y, w, h)
     dst_img_cp = dst_img.copy()
     dst_img_cp[y:y + h, x:x + w] = output
     # print("src_face, dst_face, src_points, dst_points, dst_shape, dst_img", src_face, dst_face, src_points, dst_points,dst_shape, dst_img)
